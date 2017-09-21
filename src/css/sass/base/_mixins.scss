@@ -1,9 +1,7 @@
-@mixin open-sans-reg($size) {
-  font: $size "open-sans-reg", sans-serif;
+@mixin agenda($size) {
+  font: $size "agenda", sans-serif;
 }
-@mixin open-sans-bold($size) {
-  font: $size "open-sans-bold", sans-serif;
-}
+
 //before - after
 @mixin pseudo( $content, $display){
   content: $content;

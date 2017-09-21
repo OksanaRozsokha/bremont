@@ -1,0 +1,11 @@
+body {
+  @include agenda(14px);
+}
+
+ul {
+  list-style: none;
+}
+
+.text-info {
+  display: none;
+}

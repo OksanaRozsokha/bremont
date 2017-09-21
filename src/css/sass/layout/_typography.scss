@@ -1,0 +1,9 @@
+.title {
+  @include agenda(1rem);
+  text-align: center;
+  color: $main-color;
+}
+
+.text {
+  @include agenda(1rem);
+}
