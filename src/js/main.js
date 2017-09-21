@@ -1,4 +1,4 @@
-let bucketList = [];
+let bucketList = {};
 let products;
 let productInfo = document.getElementById('info-card');
 let ourRequest = new XMLHttpRequest();
@@ -49,30 +49,26 @@ function initButtons() {
         let attribute = this.getAttribute("data-index");
         let product = products[attribute];
 
-        let bucketElement = {
-            id: product.id,
-            quantity: 1,
-            price: product.variants[0].price
-        };
-        console.log(bucketElement);
+        let bucketElement;
 
-        bucketList.push({
-            key:   product.id,
-            value: bucketElement
-        });
+        if ( bucketList[product.id] !== undefined) {
+            bucketElement = bucketList[product.id];
+            bucketElement.quantity += 1;
+            console.log(bucketElement);
 
-        // bucketList.push({
-        //     key:   product.id,
-        //     value: bucketElement
-        // });
+        } else {
+            bucketElement = {
+                id: product.id,
+                quantity: 1,
+                price: product.variants[0].price
+            };
+        }
 
-        // bucketList.id = bucketElement.id;
-
+        bucketList[product.id] = bucketElement;
 
         console.log(bucketList);
+        console.log(bucketList[product.id]);
     };
-
-
 
     for (let i = 0; i < classname.length; i++) {
         classname[i].addEventListener('click', myFunction, false);
