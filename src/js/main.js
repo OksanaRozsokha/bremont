@@ -2,7 +2,8 @@ $(document).ready(function () {
     let bucketList = {};
     let products;
     let productInfo = document.getElementById('info-card');
-    let bucketInfo =document.getElementById('bucket-popup');
+    let bucketInfo = document.getElementById('bucket-popup');
+    let totalPrice = document.getElementById('price-item');
     let ourRequest = new XMLHttpRequest();
     ourRequest.open( 'GET','https://shop.bremont.com/products.json');
     ourRequest.onload = function () {
@@ -57,6 +58,8 @@ $(document).ready(function () {
             if ( bucketList[product.id] !== undefined) {
                 bucketElement = bucketList[product.id];
                 bucketElement.quantity += 1;
+                // bucketElement.price *= bucketElement.quantity;
+
                 // console.log(bucketElement);
 
             } else {
@@ -79,16 +82,23 @@ $(document).ready(function () {
     }
 
     $('#btn').on('click', function () {
-        let totalItems = "";
-
-        for(let itemId in bucketList){
-            totalItems += '<li>';
-            totalItems += "<h2 class='title'>" + bucketList[itemId].title + "</h2>";
-            totalItems += "<span class='text text-small text-grey'>" + "Quantity: " + bucketList[itemId].quantity + "</span>";
-            totalItems += "<span class='text text-small text-grey'>" + "Price " + bucketList[itemId].price + "</span>";
-            totalItems += '</li>';
+        let bucketItem = "";
+        let priceItem = 0;
+        let priceHtml = "";
+        for(let itemId in bucketList) {
+            bucketItem += '<li>';
+            bucketItem += "<h2 class='title'>" + bucketList[itemId].title + "</h2>";
+            bucketItem += "<span class='text text-small text-grey'>" + "Price " + bucketList[itemId].price + "</span>";
+            bucketItem += "<span class='text text-small text-grey'>" + "Quantity: " + bucketList[itemId].quantity + "</span>";
+            bucketItem += "<span class='text text-small text-grey'>" + "Total: " + bucketList[itemId].quantity  * bucketList[itemId].price + "</span>";
+            bucketItem += '</li>';
+            priceItem +=  bucketList[itemId].quantity  * bucketList[itemId].price;
         }
-        bucketInfo.innerHTML = totalItems;
+
+        // totalPrice.innerHTML = priceItem;
+        totalPrice.innerHTML = " Subtotal: " + priceItem;
+
+        bucketInfo.innerHTML = bucketItem;
         $('#bucket-wrap').fadeIn(500);
     });
 
