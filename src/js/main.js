@@ -52,42 +52,25 @@ $(document).ready(function () {
             let product = products[attribute];
 
             let bucketElement;
-            let totalItems = "";
+
 
             if ( bucketList[product.id] !== undefined) {
                 bucketElement = bucketList[product.id];
                 bucketElement.quantity += 1;
                 // console.log(bucketElement);
 
-                for(let items in bucketElement){
-                    totalItems += '<li>';
-                    for(let i = 0; i < bucketElement[items].length; i++){
-                        totalItems += '<h2>';
-                        totalItems += "<h2 class='title'>" + bucketElement[items][i].title + "</h2>";
-                        totalItems += "<span class='text text-small text-grey'>" + bucketElement[items][i].quantity + "</span>";
-                        totalItems += "<span class='text text-small text-grey'>" + bucketElement[items][i].price + "</span>";
-                    }
-                    totalItems += '</li>';
-
-                }
-                bucketInfo.innerHTML = totalItems;
-
             } else {
                 bucketElement = {
                     id: product.id,
+                    title: product.title,
                     quantity: 1,
                     price: product.variants[0].price,
-                    title: product.title
                 };
             }
-
             bucketList[product.id] = bucketElement;
 
             console.log(bucketList);
             console.log(bucketList[product.id]);
-            // for (let element in bucketList) {
-            //     console.log(element);
-            // }
         };
 
         for (let i = 0; i < classname.length; i++) {
@@ -96,6 +79,20 @@ $(document).ready(function () {
     }
 
     $('#btn').on('click', function () {
-       $('#bucket-wrap').slideToggle(500);
+        let totalItems = "";
+
+        for(let itemId in bucketList){
+            totalItems += '<li>';
+            totalItems += "<h2 class='title'>" + bucketList[itemId].title + "</h2>";
+            totalItems += "<span class='text text-small text-grey'>" + "Quantity: " + bucketList[itemId].quantity + "</span>";
+            totalItems += "<span class='text text-small text-grey'>" + "Price " + bucketList[itemId].price + "</span>";
+            totalItems += '</li>';
+        }
+        bucketInfo.innerHTML = totalItems;
+        $('#bucket-wrap').fadeIn(500);
+    });
+
+    $('#close-btn').on('click', function () {
+        $('#bucket-wrap').fadeOut(500);
     });
 });
