@@ -29,6 +29,7 @@ $(document).ready(function () {
         // console.log(htmlString);
         productInfo.insertAdjacentHTML('beforeend', htmlString);
         initButtons();
+
     }
 
     function sliderImages(images) {
@@ -45,8 +46,9 @@ $(document).ready(function () {
 
         return html;
     }
+
     function initButtons() {
-        let classname = document.getElementsByClassName('buy-btn');
+        let buyButton = document.getElementsByClassName('buy-btn');
 
         let  myFunction = function() {
             let attribute = this.getAttribute("data-index");
@@ -54,11 +56,9 @@ $(document).ready(function () {
 
             let bucketElement;
 
-
             if ( bucketList[product.id] !== undefined) {
                 bucketElement = bucketList[product.id];
                 bucketElement.quantity += 1;
-                // bucketElement.price *= bucketElement.quantity;
 
                 // console.log(bucketElement);
 
@@ -76,31 +76,64 @@ $(document).ready(function () {
             console.log(bucketList[product.id]);
         };
 
-        for (let i = 0; i < classname.length; i++) {
-            classname[i].addEventListener('click', myFunction, false);
+        for (let i = 0; i < buyButton.length; i++) {
+            buyButton[i].addEventListener('click', myFunction, false);
         }
     }
 
+ function bucketListHtml() {
+     let bucketItem = "";
+     let priceItem = 0;
+
+     for (let itemId in bucketList) {
+         if (bucketList[itemId] === undefined) { continue; }
+         bucketItem += '<li>';
+         bucketItem += "<button class='remove-btn'  data-index='"+itemId+"'>remove</button>";
+         bucketItem += "<h2 class='title'>" + bucketList[itemId].title + "</h2>";
+         bucketItem += "<span class='text text-small text-grey'>" + "Price " + bucketList[itemId].price + "</span>";
+         bucketItem += "<span class='text text-small text-grey'>" + "Quantity: " + bucketList[itemId].quantity + "</span>";
+         bucketItem += "<span class='text text-small text-grey'>" + "Total: " + bucketList[itemId].quantity  * bucketList[itemId].price + "</span>";
+         bucketItem += '</li>';
+         priceItem +=  bucketList[itemId].quantity  * bucketList[itemId].price;
+     }
+     totalPrice.innerHTML = " Subtotal: " + priceItem;
+     bucketInfo.innerHTML = bucketItem;
+     removeButtons();
+ }
+
     $('#btn').on('click', function () {
-        let bucketItem = "";
-        let priceItem = 0;
-        let priceHtml = "";
-        for(let itemId in bucketList) {
-            bucketItem += '<li>';
-            bucketItem += "<h2 class='title'>" + bucketList[itemId].title + "</h2>";
-            bucketItem += "<span class='text text-small text-grey'>" + "Price " + bucketList[itemId].price + "</span>";
-            bucketItem += "<span class='text text-small text-grey'>" + "Quantity: " + bucketList[itemId].quantity + "</span>";
-            bucketItem += "<span class='text text-small text-grey'>" + "Total: " + bucketList[itemId].quantity  * bucketList[itemId].price + "</span>";
-            bucketItem += '</li>';
-            priceItem +=  bucketList[itemId].quantity  * bucketList[itemId].price;
-        }
-
-        // totalPrice.innerHTML = priceItem;
-        totalPrice.innerHTML = " Subtotal: " + priceItem;
-
-        bucketInfo.innerHTML = bucketItem;
+        bucketListHtml();
         $('#bucket-wrap').fadeIn(500);
     });
+
+    function removeButtons() {
+        let removeButton = document.getElementsByClassName('remove-btn');
+
+        let removeOrder = function() {
+            let productId = this.getAttribute("data-index");
+
+            let bucketElement;
+
+            if ( bucketList[productId].quantity > 1) {
+                bucketElement = bucketList[productId];
+                bucketElement.quantity -= 1;
+
+            } else {
+                delete bucketList.productId;
+
+                delete bucketList['productId'];
+                console.log(bucketList);
+
+            }
+            bucketList[productId] = bucketElement;
+            bucketListHtml();
+
+        };
+
+        for (let i = 0; i < removeButton.length; i++) {
+            removeButton[i].addEventListener('click', removeOrder, false);
+        }
+    }
 
     $('#close-btn').on('click', function () {
         $('#bucket-wrap').fadeOut(500);
