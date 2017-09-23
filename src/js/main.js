@@ -29,7 +29,6 @@ $(document).ready(function () {
         // console.log(htmlString);
         productInfo.insertAdjacentHTML('beforeend', htmlString);
         initButtons();
-
     }
 
     function sliderImages(images) {
