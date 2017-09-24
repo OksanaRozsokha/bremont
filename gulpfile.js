@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+let gulp = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     cssnano = require('gulp-cssnano'),
@@ -13,7 +13,7 @@ var gulp = require('gulp'),
     reload = browserSync.reload,
     runSequence = require('run-sequence');
 
-var config = {
+let config = {
     'src': './src',
     'dest': './dist',
     'html': {
@@ -22,7 +22,7 @@ var config = {
     },
     'sass': {
         'src': './src/css/sass/**/*.scss',
-        'dest': './dist/css/css'
+        'dest': './dist/css'
 
     },
     'js': {
@@ -41,16 +41,13 @@ var config = {
     },
     'fonts': {
         'src': [
-            './node_modules/font-awesome/fonts/*',
-            './src/fonts/*'
+            './src/fonts/**/*'
         ],
         'dest': './dist/fonts/'
     }
 };
 
-
 //gulp-htmlmin
-
 
 gulp.task('minify:html', function() {
     return gulp.src(config.html.src)

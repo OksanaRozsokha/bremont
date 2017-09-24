@@ -1,0 +1,23 @@
+.btn {
+  font-size: 1rem;
+  padding: 0.5em;
+  color: $main-color;
+  border: none;
+  border-radius: 0;
+
+  &-color {
+    background: $brand-red;
+    color: $secondary-color;
+
+    &:hover {
+      background: $brand-hover-red;
+    }
+  }
+  &-cart {
+    text-indent: -9999px;
+    width: 4.5rem;
+    height: 4rem;
+    @include small-bg("../../img/cart.png");
+    background: $brand-color url("../../img/cart.png") 50% 50% no-repeat;
+  }
+}
