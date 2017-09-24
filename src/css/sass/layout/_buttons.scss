@@ -1,6 +1,6 @@
 .btn {
   font-size: 1rem;
-  padding: 0.5em;
+  padding: .7em 1.5rem;
   color: $main-color;
   border: none;
   border-radius: 0;
@@ -13,11 +13,24 @@
       background: $brand-hover-red;
     }
   }
+
+  &-form {
+    text-transform: uppercase;
+    padding: 0 2.5rem;
+  }
+
   &-cart {
     text-indent: -9999px;
     width: 4.5rem;
     height: 4rem;
-    @include small-bg("../../img/cart.png");
     background: $brand-color url("../../img/cart.png") 50% 50% no-repeat;
+  }
+
+  &-close {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $general-color;
+    padding: 0.5rem 1rem;
   }
 }

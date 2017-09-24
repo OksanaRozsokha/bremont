@@ -1,132 +1,131 @@
 $(document).ready(function () {
-    let bucketList = {};
     let products;
-    let productInfo = document.getElementById('info-card');
-    let bucketInfo = document.getElementById('bucket-popup');
+    let cartList = {};
+    let productInfo = document.getElementById('products-info');
+    let cartItemsList = document.getElementById('cart-list');
     let totalPrice = document.getElementById('price-item');
-    let ourRequest = new XMLHttpRequest();
-    ourRequest.open( 'GET','https://shop.bremont.com/products.json');
-    ourRequest.onload = function () {
-        let ourData = JSON.parse(ourRequest.responseText);
-        products = ourData.products;
-        renderHTML(products);
-    };
-    ourRequest.send();
+    let ajaxRequest = new XMLHttpRequest();
 
-    function renderHTML(products) {
-        let htmlString = "";
+    ajaxRequest.open( 'GET','https://shop.bremont.com/products.json');
+
+    ajaxRequest.onload = function () {
+        let jsonData = JSON.parse(ajaxRequest.responseText);
+        products = jsonData.products;
+        productsListHTML(products);
+    };
+
+    ajaxRequest.send();
+
+    function productsListHTML(products) {
+        let htmlProduct = "";
         // console.log(products.length);
 
         for (i = 0; i < products.length; i++) {
-            htmlString += "<li class='col-md-6 col-lg-4'>";
-            htmlString += sliderImages([products[i].images[0]]);
-            htmlString += "<a href='#'><h3 class='title title-small'>" + products[i].title + "</h3></a>";
-            htmlString += "<button class='btn btn-color buy-btn'  data-index='"+i+"'>Add to cart</button>";
-            htmlString += "<p class='text text-info'>" + products[i].body_html + "</p>";
-            htmlString += "<span class='text text-small text-grey'>" + products[i].variants[0].price + "</span>";
-            htmlString +="</li>";
+            htmlProduct += "<li class='col-md-6 col-lg-4'>";
+            htmlProduct += productImages([products[i].images[0]]);
+            htmlProduct += "<h3 class='title title-small'>" + products[i].title + "</h3>";
+            htmlProduct += "<div class='flex-container'>";
+            htmlProduct += "<button class='btn btn-color buy-btn'  data-index='"+i+"'>Add to cart</button>";
+            htmlProduct += "<span class='text text-small text-grey'>" + "£" + products[i].variants[0].price + "</span>";
+            htmlProduct += "</div>";
+            htmlProduct += "<div class='text text-info'>" + products[i].body_html + "</div>";
+            htmlProduct +="</li>";
         }
         // console.log(htmlString);
-        productInfo.insertAdjacentHTML('beforeend', htmlString);
-        initButtons();
+        productInfo.insertAdjacentHTML('beforeend', htmlProduct);
+        purchaseButtons();
     }
 
-    function sliderImages(images) {
+    function productImages(images) {
         let html = "";
-        html += "<div class=''>";
+        // html += "<div class=''>";
         if (images.length > 0) {
             for (let count = 0; count < images.length; count++) {
-                html += "<img class='slider-image' src='"+ images[count].src +"'>";
+                html += "<img class='product-image' src='"+ images[count].src +"'>";
             }
         } else {
             html += "<img class='slider-image' src='img/product-placeholder.jpg'>";
         }
-        html += "</div>";
+        // html += "</div>";
 
         return html;
     }
-
-    function initButtons() {
+    function purchaseButtons() {
         let buyButton = document.getElementsByClassName('buy-btn');
 
-        let  myFunction = function() {
+        let  addProductToCart = function() {
             let attribute = this.getAttribute("data-index");
             let product = products[attribute];
 
             let bucketElement;
 
-            if ( bucketList[product.id] !== undefined) {
-                bucketElement = bucketList[product.id];
+            if ( cartList[product.id] !== undefined) {
+                bucketElement = cartList[product.id];
                 bucketElement.quantity += 1;
-
                 // console.log(bucketElement);
-
             } else {
                 bucketElement = {
                     id: product.id,
                     title: product.title,
                     quantity: 1,
                     price: product.variants[0].price,
+                    image: product.images[0].src
                 };
             }
-            bucketList[product.id] = bucketElement;
+            cartList[product.id] = bucketElement;
 
-            console.log(bucketList);
-            console.log(bucketList[product.id]);
+            console.log(cartList);
+            console.log(cartList[product.id]);
         };
 
         for (let i = 0; i < buyButton.length; i++) {
-            buyButton[i].addEventListener('click', myFunction, false);
+            buyButton[i].addEventListener('click', addProductToCart, false);
         }
     }
 
- function bucketListHtml() {
-     let bucketItem = "";
-     let priceItem = 0;
+     function cartListHtml() {
+         let cartItem = "";
+         let priceItem = 0;
 
-     for (let itemId in bucketList) {
-         if (bucketList[itemId] === undefined) { continue; }
-         bucketItem += '<li>';
-         bucketItem += "<button class='remove-btn'  data-index='"+itemId+"'>remove</button>";
-         bucketItem += "<h2 class='title'>" + bucketList[itemId].title + "</h2>";
-         bucketItem += "<span class='text text-small text-grey'>" + "Price " + bucketList[itemId].price + "</span>";
-         bucketItem += "<span class='text text-small text-grey'>" + "Quantity: " + bucketList[itemId].quantity + "</span>";
-         bucketItem += "<span class='text text-small text-grey'>" + "Total: " + bucketList[itemId].quantity  * bucketList[itemId].price + "</span>";
-         bucketItem += '</li>';
-         priceItem +=  bucketList[itemId].quantity  * bucketList[itemId].price;
+         for (let itemId in cartList) {
+             if (cartList[itemId] === undefined) { continue; }
+             cartItem += '<div class="cart-item">';
+             cartItem += "<button class='remove-btn'  data-index='"+itemId+"'>remove</button>";
+             cartItem += "<img class='cart-image' src='"+ cartList[itemId].image +"'>";
+             cartItem += "<h2 class='title title-smallest title-grey'>" + cartList[itemId].title + "</h2>";
+             cartItem += "<span class='text text-small text-grey'>" + "Price: £" + cartList[itemId].price + "</span>";
+             cartItem += "<span class='text text-small text-grey'>" + "Quantity: " + cartList[itemId].quantity + "</span>";
+             cartItem += "<span class='text text-small text-brand'>" + "Total: £" + cartList[itemId].quantity  * cartList[itemId].price + "</span>";
+             cartItem += '</div>';
+             priceItem +=  cartList[itemId].quantity  * cartList[itemId].price;
+         }
+
+         cartItemsList.innerHTML = cartItem;
+         totalPrice.innerHTML = " Subtotal: £" + priceItem;
+         deleteButtons();
      }
-     totalPrice.innerHTML = " Subtotal: " + priceItem;
-     bucketInfo.innerHTML = bucketItem;
-     removeButtons();
- }
 
-    $('#cart-btn').on('click', function () {
-        bucketListHtml();
-        $('#bucket-wrap').fadeIn(500);
-    });
-
-    function removeButtons() {
+    function deleteButtons() {
         let removeButton = document.getElementsByClassName('remove-btn');
 
         let removeOrder = function() {
             let productId = this.getAttribute("data-index");
 
-            let bucketElement;
+            let cartElement;
 
-            if ( bucketList[productId].quantity > 1) {
-                bucketElement = bucketList[productId];
-                bucketElement.quantity -= 1;
+            if ( cartList[productId].quantity > 1) {
+                cartElement = cartList[productId];
+                cartElement.quantity -= 1;
 
             } else {
-                delete bucketList.productId;
+                delete cartList.productId;
 
-                delete bucketList['productId'];
-                console.log(bucketList);
-
+                delete cartList['productId'];
+                console.log(cartList);
             }
-            bucketList[productId] = bucketElement;
-            bucketListHtml();
 
+            cartList[productId] = cartElement;
+            cartListHtml();
         };
 
         for (let i = 0; i < removeButton.length; i++) {
@@ -134,7 +133,26 @@ $(document).ready(function () {
         }
     }
 
-    $('#close-btn').on('click', function () {
-        $('#bucket-wrap').fadeOut(500);
+       //cart-popup
+
+    $('#cart-btn').on('click', function () {
+        cartListHtml();
+        $('#cart-wrap').fadeIn(500);
+        $('body').addClass('active-body');
     });
+
+    $('.btn-close').on('click', function () {
+        $('#cart-wrap').fadeOut(500);
+        $('body').removeClass('active-body');
+    });
+
+    $('#cart-wrap').on('click', function () {
+        $(this).fadeOut();
+        $('body').removeClass('active-body');
+    });
+
+    $('#cart-popup').on('click', function (e) {
+        e.stopPropagation();
+    });
+
 });

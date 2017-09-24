@@ -5,12 +5,34 @@
   text-transform: uppercase;
 
   &-small {
-    @include agenda(1.2rem);
+    @include agenda(1.1rem);
     text-transform: capitalize;
+  }
+
+  &-smallest {
+    @include agenda(1rem);
+    text-transform: capitalize;
+  }
+
+  &-grey {
+    color: $tertiary-color;
   }
 }
 
 .text {
-  @include agenda(1.1rem);
+  @include agenda(1rem);
   line-height: 1.5em;
+  color: $main-color;
+
+  &-brand {
+    color: $brand-color;
+  }
+
+  &-grey {
+    color: $tertiary-color;
+  }
+
+  &-small {
+    font-size: 0.9rem;
+  }
 }
