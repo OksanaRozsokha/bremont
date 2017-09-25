@@ -31,6 +31,8 @@ let config = {
             './node_modules/tether/dist/js/tether.min.js',
             './node_modules/bootstrap/dist/js/bootstrap.min.js',
             './node_modules/owl.carousel/dist/owl.carousel.min.js',
+            './node_modules/slick-carousel/slick/slick.min.js',
+            './node_modules/swiper/dist/js/swiper.min.js',
             './src/js/*.js'
         ],
         'dest': './dist/js'

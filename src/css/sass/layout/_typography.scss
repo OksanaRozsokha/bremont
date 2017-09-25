@@ -32,6 +32,11 @@
     color: $tertiary-color;
   }
 
+  &-big {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+  }
+
   &-small {
     font-size: 0.9rem;
   }

@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         for (i = 0; i < products.length; i++) {
             htmlProduct += "<li class='col-md-6 col-lg-4'>";
-            htmlProduct += productImages([products[i].images[0]]);
+            htmlProduct += productImages(products[i].images);
             htmlProduct += "<h3 class='title title-small'>" + products[i].title + "</h3>";
             htmlProduct += "<div class='flex-container'>";
             htmlProduct += "<button class='btn btn-color buy-btn'  data-index='"+i+"'>Add to cart</button>";
@@ -31,25 +31,28 @@ $(document).ready(function () {
             htmlProduct += "<div class='text text-info'>" + products[i].body_html + "</div>";
             htmlProduct +="</li>";
         }
-        // console.log(htmlString);
+
         productInfo.insertAdjacentHTML('beforeend', htmlProduct);
         purchaseButtons();
     }
 
     function productImages(images) {
         let html = "";
-        // html += "<div class=''>";
+        html += "<div class='slider'>";
         if (images.length > 0) {
             for (let count = 0; count < images.length; count++) {
+                html += "<div class='carousel-item'>";
                 html += "<img class='product-image' src='"+ images[count].src +"'>";
+                html += "</div>";
             }
         } else {
             html += "<img class='slider-image' src='img/product-placeholder.jpg'>";
         }
-        // html += "</div>";
+        html += "</div>";
 
         return html;
     }
+
     function purchaseButtons() {
         let buyButton = document.getElementsByClassName('buy-btn');
 
@@ -57,14 +60,14 @@ $(document).ready(function () {
             let attribute = this.getAttribute("data-index");
             let product = products[attribute];
 
-            let bucketElement;
+            let cartElement;
 
             if ( cartList[product.id] !== undefined) {
-                bucketElement = cartList[product.id];
-                bucketElement.quantity += 1;
+                cartElement = cartList[product.id];
+                cartElement.quantity += 1;
                 // console.log(bucketElement);
             } else {
-                bucketElement = {
+                cartElement = {
                     id: product.id,
                     title: product.title,
                     quantity: 1,
@@ -72,7 +75,7 @@ $(document).ready(function () {
                     image: product.images[0].src
                 };
             }
-            cartList[product.id] = bucketElement;
+            cartList[product.id] = cartElement;
 
             console.log(cartList);
             console.log(cartList[product.id]);
@@ -90,7 +93,7 @@ $(document).ready(function () {
          for (let itemId in cartList) {
              if (cartList[itemId] === undefined) { continue; }
              cartItem += '<div class="cart-item">';
-             cartItem += "<button class='remove-btn'  data-index='"+itemId+"'>remove</button>";
+             cartItem += "<button class='btn btn-color btn-radius remove-btn'  data-index='"+itemId+"'>&#8212</button>";
              cartItem += "<img class='cart-image' src='"+ cartList[itemId].image +"'>";
              cartItem += "<h2 class='title title-smallest title-grey'>" + cartList[itemId].title + "</h2>";
              cartItem += "<span class='text text-small text-grey'>" + "Price: £" + cartList[itemId].price + "</span>";
@@ -101,7 +104,7 @@ $(document).ready(function () {
          }
 
          cartItemsList.innerHTML = cartItem;
-         totalPrice.innerHTML = " Subtotal: £" + priceItem;
+         totalPrice.innerHTML = " Subtotal:  £" + priceItem.toFixed(2);
          deleteButtons();
      }
 
@@ -154,5 +157,6 @@ $(document).ready(function () {
     $('#cart-popup').on('click', function (e) {
         e.stopPropagation();
     });
+
 
 });
