@@ -1,16 +1,16 @@
 .title {
-  @include agenda(1.6rem);
+  @include agenda(1.9rem);
   text-align: center;
   color: $main-color;
   text-transform: uppercase;
 
   &-small {
-    @include agenda(1.1rem);
+    @include agenda(1.5rem);
     text-transform: capitalize;
   }
 
   &-smallest {
-    @include agenda(1rem);
+    @include agenda(1.4rem);
     text-transform: capitalize;
   }
 
@@ -20,7 +20,7 @@
 }
 
 .text {
-  @include agenda(1rem);
+  @include agenda(1.5rem);
   line-height: 1.5em;
   color: $main-color;
 
@@ -33,11 +33,11 @@
   }
 
   &-big {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     text-transform: uppercase;
   }
 
   &-small {
-    font-size: 0.9rem;
+    font-size: 1.4rem;
   }
 }

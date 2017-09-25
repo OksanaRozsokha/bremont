@@ -1,5 +1,5 @@
 .btn {
-  font-size: 1rem;
+  font-size: 1.4rem;
   padding: .7em 1.5rem;
   color: $main-color;
   border: none;
@@ -24,9 +24,9 @@
 
   &-cart {
     text-indent: -9999px;
-    width: 4.5rem;
-    height: 4rem;
-    background: $brand-color url("../../img/cart.png") 50% 50% no-repeat;
+    width: 6.5rem;
+    height: 6rem;
+    background: $brand-color url("../img/cart.png") 50% 50% no-repeat;
   }
 
   &-close {

@@ -4,10 +4,6 @@
 @import "../../../node_modules/bootstrap/scss/bootstrap-reboot";
 @import "../../../node_modules/owl.carousel/src/scss/owl.carousel";
 @import "../../../node_modules/owl.carousel/src/scss/owl.theme.default";
-@import "../../../node_modules/slick-carousel/slick/slick.scss";
-@import "../../../node_modules/slick-carousel/slick/slick-theme.scss";
-@import "../../../node_modules/swiper/dist/css/swiper.min.css";
-//@import "../../../node_modules/font-awesome/scss/font-awesome";
 @import "base/fonts";
 @import "base/variables";
 @import "base/mixins";
@@ -16,7 +12,6 @@
 @import "layout/cart-popap";
 @import "layout/header";
 @import "layout/buttons";
-@import "layout/slider";
 @import "layout/content-head";
 @import "sections/products";
 @import "layout/footer";

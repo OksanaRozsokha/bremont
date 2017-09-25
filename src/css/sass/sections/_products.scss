@@ -5,13 +5,13 @@
 
     &:nth-child(19) {
       .product-image {
-        height: 21.666rem;
+        height: 28.999rem;
       }
     }
   }
 
   .title {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -19,11 +19,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-
-  .btn {
-    margin-right: 1rem;
-  }
+  margin-bottom: 2.5rem;
 }
 
 .product-image {
@@ -35,18 +31,18 @@
 }
 
 .text-info {
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   color: $main-color !important;
   text-align: justify;
 
   p {
-    font-size: 0.9rem !important;
+    font-size: 1.3rem !important;
     color: $main-color;
     margin: 0;
   }
 
   .p1 {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
   }
 
   img {

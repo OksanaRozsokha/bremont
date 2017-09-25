@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         for (i = 0; i < products.length; i++) {
             htmlProduct += "<li class='col-md-6 col-lg-4'>";
-            htmlProduct += productImages(products[i].images);
+            htmlProduct += productImages([products[i].images[0]]);
             htmlProduct += "<h3 class='title title-small'>" + products[i].title + "</h3>";
             htmlProduct += "<div class='flex-container'>";
             htmlProduct += "<button class='btn btn-color buy-btn'  data-index='"+i+"'>Add to cart</button>";
@@ -38,18 +38,13 @@ $(document).ready(function () {
 
     function productImages(images) {
         let html = "";
-        html += "<div class='slider'>";
         if (images.length > 0) {
             for (let count = 0; count < images.length; count++) {
-                html += "<div class='carousel-item'>";
                 html += "<img class='product-image' src='"+ images[count].src +"'>";
-                html += "</div>";
             }
         } else {
             html += "<img class='slider-image' src='img/product-placeholder.jpg'>";
         }
-        html += "</div>";
-
         return html;
     }
 
@@ -65,7 +60,7 @@ $(document).ready(function () {
             if ( cartList[product.id] !== undefined) {
                 cartElement = cartList[product.id];
                 cartElement.quantity += 1;
-                // console.log(bucketElement);
+
             } else {
                 cartElement = {
                     id: product.id,
@@ -157,6 +152,5 @@ $(document).ready(function () {
     $('#cart-popup').on('click', function (e) {
         e.stopPropagation();
     });
-
 
 });
