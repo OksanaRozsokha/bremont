@@ -6,11 +6,11 @@
   border-radius: 0;
 
   &-color {
-    background: $brand-red;
+    background: $brand-color;
     color: $secondary-color;
 
     &:hover {
-      background: $brand-hover-red;
+      background: $brand-hover-color;
     }
   }
 

@@ -43,7 +43,7 @@ $(document).ready(function () {
                 html += "<img class='product-image' src='"+ images[count].src +"'>";
             }
         } else {
-            html += "<img class='slider-image' src='img/product-placeholder.jpg'>";
+            html += "<img class='product-image' src='img/product-placeholder.jpg'>";
         }
         return html;
     }
@@ -52,8 +52,8 @@ $(document).ready(function () {
         let buyButton = document.getElementsByClassName('buy-btn');
 
         let  addProductToCart = function() {
-            let attribute = this.getAttribute("data-index");
-            let product = products[attribute];
+            let index = this.getAttribute("data-index");
+            let product = products[index];
 
             let cartElement;
 
